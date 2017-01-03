@@ -1,6 +1,3 @@
-var result = 0;
-process.argv.forEach(function(arg) {
-  var num = Number(arg);
-  result += isNaN(num)?0:num;
-});
-console.log(result);
+var fs = require('fs')
+var contents = fs.readFileSync(process.argv[2]);
+console.log(contents.toString('utf8').split('\n').length - 1);
