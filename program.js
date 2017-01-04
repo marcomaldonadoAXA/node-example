@@ -1,9 +1,13 @@
 var http = require('http')
-var fs = require('fs')
+var map = require('through2-map')
 
 var server = http.createServer(function (req, res) {
-  res.writeHead(200, { 'content-type': 'text/plain' })
-  var src = fs.createReadStream(process.argv[3])
-  src.pipe(res)
+  if (req.method !== 'POST') {
+    return res.end('send me a POST\n')
+  }
+  
+  req.pipe(map(function (data) {
+    return data.toString().toUpperCase()
+  })).pipe(res)
 })
 server.listen(process.argv[2])
