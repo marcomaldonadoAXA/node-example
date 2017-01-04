@@ -1,15 +1,10 @@
-var fs = require('fs')
-var path = require('path')
+var filter = require('./filtered-ls.js')
 
-var extension = "." + process.argv[3];
-
-fs.readdir(process.argv[2], function callback(err, contents) {
+filter(process.argv[2], process.argv[3], function(err, data) {
   if (err) {
-    console.log(err);
+    return console.log(err);
   }
-  contents.forEach(function(file) {
-    if (path.extname(file) === extension) {
-      console.log(file);
-    }
-  });
+  data.forEach(function (file) {
+    console.log(file);
+  })
 });
